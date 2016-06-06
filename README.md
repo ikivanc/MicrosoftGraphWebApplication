@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Microsoft Graph 'a başlangıç
 Bu lab örneğinde , Microsoft Graph ile ilk projenizi geliştireceksiniz.
 
@@ -15,8 +14,8 @@ Bu adımda, bir MVC web uygulaması oluşturup onu Microsoft Graph ile bağlamay
 
     ![](Screenshots/01.png)
     > **Not:** Projenizi olutşururken bu lab içerisindeki isimlerin aynısını vermeye dikkat edin. The Visual Studio Project adı projenin kodu içerisinde namespace olacaktır. Bu adımlardaki kodların tamamı namespace ile ilişkili olacağı için kodunuzun çalışmasına da etkili olacaktır. Eğer farklı bir proje adı verirseniz namespace'ler farklı olacağından buradaki örnek kodlar çalışmayacaktır.
-
   1. **OK** Tıklayın.
+  
 1.  **New ASP.NET Project** dialogu içerisinden
   1. **MVC** 'yi seçin.
   2. **Change Authentication** 'ı seçin.
