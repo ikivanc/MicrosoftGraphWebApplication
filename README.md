@@ -26,81 +26,46 @@ Bu adımda, bir MVC web uygulaması oluşturup onu Microsoft Graph ile bağlamay
   7. **OK** 'i tıklayın.
   8. **Host in the cloud** seçeniğini kaldırın.
   9. **OK** 'İ tıklayın.
-=======
-# Getting started with Microsoft Graph
-In this lab, you will investigate the Microsoft Graph.
-
-## Prerequisites
-1. You must have an Office 365 tenant to complete this lab. If you do not have one, the lab for **O3651-7 Setting up your Developer environment in Office 365** shows you how to obtain a trial.
-
-## Exercise 1: Create & Configure an MVC Web Application
-In this exercise you will create a new MVC web application to utilize the Microsoft Graph.
-
-1. In Visual Studio, click **File/New/Project**.
-1. In the **New Project** dialog
-  1. Select **Templates/Visual C#/Web**.
-  1. Select **ASP.NET Web Application**.
-
-    ![](Screenshots/01.png)
-    > **Note:** Make sure you enter the exact same name for the Visual Studio Project that is specified in these lab instructions.  The Visual Studio Project name becomes part of the namespace in the code.  The code inside these instructions depends on the namespace matching the Visual Studio Project name specified in these instructions.  If you use a different project name the code will not compile unless you adjust all the namespaces to match the Visual Studio Project name you enter when you create the project.
-
-  1. Click **OK**.
-1. In the **New ASP.NET Project** dialog
-  1. Click **MVC**.
-  2. Click **Change Authentication**.
-  3. Select **Work And School Accounts**.
-  4. Select **Cloud - Single Organization**
-  5. Input **Domain**
-  6. Check **Read directory data** under Directory Access Permissions 
-  7. Click **OK**.
-  8. Uncheck **Host in the cloud**
-  9. Click **OK**.
->>>>>>> origin/master
 
     ![](Screenshots/03.png)
 
     ![](Screenshots/02.png)
 
-<<<<<<< HEAD
 1.  SSL'i default olarak kullanmak için web projesini aşağıdaki şekilde update edin :
   1. **Solution Explorer** bölümündeki araçlar penceresinde, projeyi seçin ve **Properties** araç ekranına bakın. 
   1. **SSL Enabled** özelliğini **TRUE** olarak değiştirin.
   1. **SSL URL** değerini bir sonraki adımlarda kullanmak için kopyalayın.
   1. Değişikliklerinizi kaydedin.
-=======
-1. Update the web project to use SSL by default:
-  1. In the **Solution Explorer** tool window, select the project and look at the **Properties** tool window. 
-  1. Change the property **SSL Enabled** to **TRUE**.
-  1. Copy the **SSL URL** property to the clipboard for use in the next step.
-  1. Save your changes.
->>>>>>> origin/master
 
     ![](Screenshots/SslEnabled.png)
-    > It is important to do this now because in the next step when you create the application in Azure AD, you want the reply URL to use HTTPS. If you did not do this now, you would have to manually make the changes the Visual Studio wizard is going to do for you in creating the app.
     
-1. Configure the project to always go to the homepage of the web application when debugging:
-  1. In the **Solution Explorer** tool window & select **Properties**.
-  1. Select the **Web** tab in the left margin.
-  1. Find the section **Start Action**.
-  1. Click the radio button **Start URL** and enter the SSL URL of the web project that you copied from the previous step.
+    > Bu aşama önemli çünkü Azure AD üzerinde bir application oluşturduğunuzda ona HTTPS kullarak dönüş yapmanız gerekmektedir. Eğer bu değişiliği bu aşamada gerçekleştirmediyseniz, Visual Studio wizard kullanarak yapabilir ve sizin adınıza gerekli konfigürasyonları gerçekleştirebilir.
+    
+1. Debug ederken her zaman anasayfanıza gitmesini sağlamak için projenizi konfigure edebilirsiniz:
+  1. **Solution Explorer** araç penceresi içerisinden **Properties** 'i seçin.
+  1. Sol taraftaki **Web** 'i seçin.
+  1. **Start Action** bölümüne gidin.
+  1. **Start URL** olan radio buttonuna tıklayın ve daha önceki adımlarda kopyalamış olduğunuz web projenize ait olan SSL URL adresini yapıştırın.
   
-1. At this point you can test the authentication flow for your application.
-  1. In Visual Studio, press **F5**. The browser will automatically launch taking you to the HTTPS start page for the web application.
+1. Şu an ki noktada, uygulamanızın Authentication akışını test edebilirsiniz.
+  1. Visual Studio içerisinde, **F5** 'e basın. Browser otomatik olarak çalışarak HTTPS başlangıç sayfanıza gidecektir.
 
-   > **Note:** If you receive an error that indicates ASP.NET could not connect to the SQL database, please see the [SQL Server Database Connection Error Resolution document](../../SQL-DB-Connection-Error-Resolution.md) to quickly resolve the issue. 
+   > **Not:** Eğer "ASP.NET could not connect to the SQL database" hatası alırsanız lütfen [SQL Server Database Connection Error Resolution document](https://github.com/OfficeDev/TrainingContent/blob/master/SQL-DB-Connection-Error-Resolution.md) dökümanını inceleyerek çözüm getirebilirsiniz.. 
 
-  1. To sign in, click the **Sign In** link in the upper-right corner.
-  1. Login using your **Organizational Account**.
-  1. Upon a successful login, since this will be the first time you have logged into this app, Azure AD will present you with the common consent dialog that looks similar to the following image:
-
+  1. Sign-in olabilmek için, sağ üst köşedeki **Sign In** işaretini tıklayın.
+  1. **Organizational Account** ile O365 kurum hesabınızı kullanarak login olabilirsiniz.
+  1. Başarılı bir login gerçekleştirebilmek için, ilk defa sign-in olmaya çalışırken, Azure AD  sizlere tüm login sayfalarında ortak olarak görebileceğiniz aşağıdaki ekranı görebileceksiniz:
+    
     ![](Screenshots/ConsentDialog.png)
 
-  1. Click **Accept** to approve the app's permission request on your data in Office 365.
-  1. You will then be redirected back to your web application. However notice in the upper right corner, it now shows your email address & the **Sign Out** link.
+  1. Office 365'deki bilgilerinize erişimi isteyen bu yetki diyalogunda **Accept** buttonunu tıklayarak gerekli yetki izinlerini kabul edebilirsiniz.
+  1. Daha sonrasında web uygulamanıza geri yönlendirileceksiniz. Dikkat etmeniz gereken nokta ise sağ üst köşede e-mail adresiniz ve **Sign Out** linkinin belirdiğini göreceksiniz.
 
-Congratulations... at this point your app is configured with Azure AD and leverages OpenID Connect and OWIN to facilitate the authentication process!
+Tebrikler... şu ana kadar başarılı bir şekilde Azure AD ve OpenID Connect ve OWIN kullanarak login olmayı başardınız!
 
-## Exercise 2: Configure Web Application to use Azure AD and OWIN
+
+
+## Adım 2:Azure AD ve OWIN'i kullanabilmek için, Web Uygulamanızı konfigure edin.
 In this exercise you will take the ASP.NET MVC web application you created in the previous exercise and configure it to use Azure AD & OpenID Connect for user & app authentication. You will do this by utilizing the OWIN framework. Once authenticated, you can use the access token returned by Azure AD to access the Microsoft Graph.
 
 
