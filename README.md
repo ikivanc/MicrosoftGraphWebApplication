@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Microsoft Graph 'a başlangıç
 Bu lab örneğinde , Microsoft Graph ile ilk projenizi geliştireceksiniz.
 
@@ -26,16 +27,54 @@ Bu adımda, bir MVC web uygulaması oluşturup onu Microsoft Graph ile bağlamay
   7. **OK** 'i tıklayın.
   8. **Host in the cloud** seçeniğini kaldırın.
   9. **OK** 'İ tıklayın.
+=======
+# Getting started with Microsoft Graph
+In this lab, you will investigate the Microsoft Graph.
+
+## Prerequisites
+1. You must have an Office 365 tenant to complete this lab. If you do not have one, the lab for **O3651-7 Setting up your Developer environment in Office 365** shows you how to obtain a trial.
+
+## Exercise 1: Create & Configure an MVC Web Application
+In this exercise you will create a new MVC web application to utilize the Microsoft Graph.
+
+1. In Visual Studio, click **File/New/Project**.
+1. In the **New Project** dialog
+  1. Select **Templates/Visual C#/Web**.
+  1. Select **ASP.NET Web Application**.
+
+    ![](Screenshots/01.png)
+    > **Note:** Make sure you enter the exact same name for the Visual Studio Project that is specified in these lab instructions.  The Visual Studio Project name becomes part of the namespace in the code.  The code inside these instructions depends on the namespace matching the Visual Studio Project name specified in these instructions.  If you use a different project name the code will not compile unless you adjust all the namespaces to match the Visual Studio Project name you enter when you create the project.
+
+  1. Click **OK**.
+1. In the **New ASP.NET Project** dialog
+  1. Click **MVC**.
+  2. Click **Change Authentication**.
+  3. Select **Work And School Accounts**.
+  4. Select **Cloud - Single Organization**
+  5. Input **Domain**
+  6. Check **Read directory data** under Directory Access Permissions 
+  7. Click **OK**.
+  8. Uncheck **Host in the cloud**
+  9. Click **OK**.
+>>>>>>> origin/master
 
     ![](Screenshots/03.png)
 
     ![](Screenshots/02.png)
 
+<<<<<<< HEAD
 1.  SSL'i default olarak kullanmak için web projesini aşağıdaki şekilde update edin :
   1. **Solution Explorer** bölümündeki araçlar penceresinde, projeyi seçin ve **Properties** araç ekranına bakın. 
   1. **SSL Enabled** özelliğini **TRUE** olarak değiştirin.
   1. **SSL URL** değerini bir sonraki adımlarda kullanmak için kopyalayın.
   1. Değişikliklerinizi kaydedin.
+=======
+1. Update the web project to use SSL by default:
+  1. In the **Solution Explorer** tool window, select the project and look at the **Properties** tool window. 
+  1. Change the property **SSL Enabled** to **TRUE**.
+  1. Copy the **SSL URL** property to the clipboard for use in the next step.
+  1. Save your changes.
+>>>>>>> origin/master
 
     ![](Screenshots/SslEnabled.png)
     > It is important to do this now because in the next step when you create the application in Azure AD, you want the reply URL to use HTTPS. If you did not do this now, you would have to manually make the changes the Visual Studio wizard is going to do for you in creating the app.
