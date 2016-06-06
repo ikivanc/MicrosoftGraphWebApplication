@@ -66,38 +66,37 @@ Tebrikler... şu ana kadar başarılı bir şekilde Azure AD ve OpenID Connect v
 
 
 ## Adım 2:Azure AD ve OWIN'i kullanabilmek için, Web Uygulamanızı konfigure edin.
-In this exercise you will take the ASP.NET MVC web application you created in the previous exercise and configure it to use Azure AD & OpenID Connect for user & app authentication. You will do this by utilizing the OWIN framework. Once authenticated, you can use the access token returned by Azure AD to access the Microsoft Graph.
+Bu adımda bir önceki adımda Azure AD & OpenID Connect ile bağladığımız ASP.NET MVC web uygulamasını kullanıcılar ve uygulama authentication'ları konusunda bir sonraki aşamaya geçireceğiz. bunu OWIN framework'ü kullanarak gerçekleştireceğiz. Authenticate olduktan sonra, Azure AD'den dönen access token aracılığı ile the Microsoft Graph'a erişeceğiz.
 
 
+1. Gerekli Uygulama Yetkilendirmelerinin Verilmesi 
 
-1. Grant App Necessary Permissions.
-
-  1. Browse to the [Azure Management Portal](https://manage.windowsazure.com) and sign in with your **Organizational Account**.
+  1. Tarayıcınız üzerinde [Azure Management Portal](https://manage.windowsazure.com) 'e açarak Office 365 **Organizasyon Hesabınızla** login olun.
   
-	> **Note:** If the Azure Management Portal pops up a message asking if you want to navigate to the updated Azure Management Portal answer no.
+	> **Not:** Eğer Azure Management Portal bir pop-up mesajı çıkarara sizi yeni portala yönlendirmek isterse bunu iptal edin. Örneğimiz eski portal üzerinden devam edecektir. 
 	 
-  1. In the left-hand navigation, click **Active Directory**.
-  1. Select the directory you share with your Office 365 subscription.
-  1. Locate and select the **Application** tab on the header/options bar.
-  1. Select the application you created for this lab.
-  1. Open **Configure** tab
-  1. Scroll down to the **permissions to other applications** section. 
-  1. Click the **Add Application** button.
-  1. In the **Permissions to other applications** dialog, click the **PLUS** icon next to the **Microsoft Graph** option.
-  1. Click the **CHECK** icon in the lower right corner.
-  1. For the new **Microsoft Graph** application permission entry, select the **Delegated Permissions** dropdown on the same line and then select the following permissions:
+  1. Soldaki menüden **Active Directory** seçeneğini seçin.
+  1. Office 356 hesabınızın bulunduğu directory'i seçin. 
+  1. Üstteki başlık/ayarlar barındaki sekme menülerinden **Application** 'ı seçin.
+  1. Bu lab örneği için oluşturduğunuz uygulamayı seçin.
+  1. **Configure** sekmesini açın.
+  1. Sayfa altına inerek **permissions to other applications** seçeneğini seçin. 
+  1. **Add Application** butonuna tıklayın.
+  1. **Permissions to other applications** dialog ekranında, **Microsoft Graph** seçeneğinin yanında bulunan **ARTI** ikonuna tıklayarak ekleyin
+  1. Sağ alt bölümde bulunan **CHECK** ikonunu tıklayın.
+  1. Yeni **Microsoft Graph** uygulama yetki girişi için , **Delegated Permissions** bölümündeki dropdown menüsünden aşağıdaki yetkileri seçin:
     * **Read user calendars**    
-  1. Click the **Save** button at the bottom of the page.
+  1. Sayfanın altında yer alan **Save** butonuna tıklayın.
 
      ![](Screenshots/AzurePermission.png)
-1. Add a helper class that will be used to harvest settings out of the `web.config` and create the necessary strings that will be used for authentication:
+1. Yeni bir helper class ekleyerek `web.config` haricinde authentication için gerekli olan konfigürasyonları düzenleyelim:
 
-  1. Right-click the project and select **Add/New Folder**. Give the folder the name **Utils**. 
-  1. Locate the [\\\O3651\O3651-5 Getting started with Office 365 APIs\Lab\Lab Files](/O3651/O3651-5 Getting started with Office 365 APIs/Lab Files) folder provided with this lab and find the [`SettingsHelper.cs`](/O3651/O3651-5 Getting started with Office 365 APIs/Lab Files/SettingsHelper.cs) file.  Drag the [`SettingsHelper.cs`](/O3651/O3651-5 Getting started with Office 365 APIs/Lab Files/SettingsHelper.cs) file to the **Utils** folder in the project.
+  1. Projeyi sağ tık ile seçerek  **Add/New Folder** ile yeni bir klasör ekleiyn ve klasörün ismini **Utils** olarak değiştirin. 
+  1. [Lab Dosyaları](https://github.com/OfficeDev/TrainingContent/tree/master/O3651/O3651-5%20Getting%20started%20with%20Office%20365%20APIs/Lab%20Files) klasörü içerisinde yer alan  [`SettingsHelper.cs`](https://github.com/OfficeDev/TrainingContent/tree/master/O3651/O3651-5%20Getting%20started%20with%20Office%20365%20APIs/Lab%20Files) dosyasını bulun. Buradaki [`SettingsHelper.cs`](https://github.com/OfficeDev/TrainingContent/tree/master/O3651/O3651-5%20Getting%20started%20with%20Office%20365%20APIs/Lab%20Files) dosyayı **Utils** klasörü içerisine alın.
       
-1. Update **_Layout** file to add **Calendar** link:
-    1. Open the **_Layout.cshtml** file found in the **Views/Shared** folder.
-      1. Locate the part of the file that includes a few links at the top of the page... it should look similar to the following code:
+1. **_Layout** dosyasınız **Calendar** linkini eklemek için düzenleyelim:
+    1. **Views/Shared** klasörü içerisinde yer alan **_Layout.cshtml** dosyasını bulup aşağıdaki şekilde güncelleyelim..
+      1. Sayfann en üst kısmını aşağıdaki şekilde update edelim... kod güncellemesi öncesi  aşağıdaki şekilde görünecektir:
       
         ````asp
         <div class="navbar-collapse collapse">
@@ -109,7 +108,7 @@ In this exercise you will take the ASP.NET MVC web application you created in th
         </div>
         ````
 
-      1. Update that navigation to have a new link (the **Calendar** link added below) as well as a reference to the login control you just created:
+      1. Sayfa linklerini (**Calendar** linki aşağıdaki gibi ekleyerek) aşağıdaki gibi ekleyerek, yeni oluşturulan login kontrolüne de referans vererek aşağıdaki gibi update edelim:
 
         ````asp
         <div class="navbar-collapse collapse">
@@ -123,14 +122,14 @@ In this exercise you will take the ASP.NET MVC web application you created in th
         </div>
         ````
 
-        > The **Calendar** link will not work yet... you will add that in the next exercise.
+        > **Calendar** linki henüz çalışmayacak... bir sonraki adımda bunun çalışması için gerkeli işlemleri gerçekleştireceğiz.
 
-## Exercise 3: Leverage the Microsoft Graph and SDK
-In this exercise you will add a controller and views that utilize the Microsoft Graph and SDK.
+## Adım 3: Microsoft Graph ve SDK'nın kullanılması
+Bu adımda Microsoft Graph ve SDK kullanımını gerçekleştirmek için controller ve view'lar ekleyerek devam edeceğiz. 
 
-1. With the authentication process complete, add a new controller that will retrieve events from your calendar:
-  1. Right-click the **Models** folder and select **Add/Class**.
-    1. In the **Add Class** dialog, give the Class the name **MyEvent** and click **Add**.
+1. Authentication işleminin tamamlanmasından sonra, takviminizden bilgileri çekebilmesi için aşağıdaki gibi yeni bir controller ekleyeceğiz:
+  1. **Models** klasörüne sağ tıklayarak **Add/Class** 'ı seçelim.
+    1. Açılan **Add Class** dialogunda, Class ismi olarak **MyEvent** adını vererek **Add** 'e tıklayalım.
     1. Implement the new class **MyEvent** using the following class definition.
     
     ````c#
@@ -148,10 +147,10 @@ In this exercise you will add a controller and views that utilize the Microsoft 
         public DateTimeOffset? End { get; set; }
     }
     ````
-  1. Right-click the **Controllers** folder and select **Add/Controller**.
-    1. In the **Add Scaffold** dialog, select **MVC 5 Controller - Empty** and click **Add**.
-    1. In the **Add Controller** dialog, give the controller the name **CalendarController** and click **Add**.
-  1. Add the following `using` statements after the existing `using` statements in the **CalendarController.cs** file:
+  1. **Controllers** klasörüne sağ tıklayarak **Add/Controller** 'u seçelim.
+    1. **Add Scaffold** dialog penceresinde  **MVC 5 Controller - Empty** seçeneğini seçerek **Add** butonunua tıklayarak ekleyelim.
+    1. **Add Controller** dialog penceresinde, controller'a **CalendarController**  adını verek **Add** butonunua tıklayarak ekleyelim.
+  1.  **CalendarController.cs** dosyası içerisine aşağıdaki `using` statementlarını var olan `using` statementlarından sonra ekleyelim:
 
     ````c#
 	using System.ComponentModel;
@@ -166,7 +165,7 @@ In this exercise you will add a controller and views that utilize the Microsoft 
     using Newtonsoft.Json.Linq;    
     ````
 
-  1. Decorate the controller to only allow authenticated users to execute it by adding the `[Authorize]` attribute on the line immediately before the controller declaration:
+  1. Buradaki içeriği sadece Authenticate olmuş kullanıcılara göstermek için aşağıda gibi `[Authorize]` attribute'nu controller tanımından önce koyalım:
 
     ````c#
     namespace Exercise2.Controllers {
@@ -175,7 +174,7 @@ In this exercise you will add a controller and views that utilize the Microsoft 
     }
     ````
 
-  1. Create a method `GetGraphAccessTokenAsync` to get access token for Graph API Authentication:
+  1. `GetGraphAccessTokenAsync`  adında yeni bir metod oluşturarak, Graph API Authentication'ından gerekli erişim token'ının alınmasını sağlayalım:
 
     ````c#
     public async Task<string> GetGraphAccessTokenAsync()
@@ -193,12 +192,12 @@ In this exercise you will add a controller and views that utilize the Microsoft 
         return result.AccessToken;
     }
     ````
-  1. Modify the `Index()` method to be asynchronous by adding the `async` keyword and modifying the return type:
+  1.`Index()` metodunu düzenleyerek asenkron çalışabilmesi için başına `async` anahtar kelimesini ekleyelim ve dönüş tipini de düzenleyelim:
 
     ````c#
     public async Task<ActionResult> Index() {}
     ````
-  1. In the `Index()` method, use the `HttpClient` to call Graph Rest API to retrieve the first 20 events in the user's calendar:
+  1. `Index()` methodu içerisinde, `HttpClient` kullanarak Graph Rest API 'dan kullanıcının takviminde yer alan ilk 20 etkinliği çekelim:
 
     ````c#
     var eventsResults = new List<MyEvent>();
@@ -242,18 +241,18 @@ In this exercise you will add a controller and views that utilize the Microsoft 
     ViewBag.Events = eventsResults.OrderBy(c => c.Start);
     ````
   
-  The last line in the `Index()` method will return the default view for the controller so leave that as is.
+  `Index()` methodunun son satırında, controller için varsayılan view 'ı döndüreceği için onu olduğu gibi bıraklım.
 
-1. Save your changes.
-1. Finally, update the view to display the results.
-  1. Within the `CalendarController` class, right click the `View()` at the end of the `Index()` method and select **Add View**.
-  1. Within the **Add View** dialog, set the following values:
+1. Değişiklikleri kaydedelim.
+1. Sonunda view arayünüzü update derek sonuçları görebiliriz.
+  1.  `CalendarController` class'ında, `Index()` methodunun  sonunda yer alan `View()` 'a sağ tıklayarak **Add View** diyelim.
+  1. **Add View** dialog penceresinde, aşağıdaki değerleri girelim:
     1. View Name: **Index**.
     1. Template: **Empty (without model)**.
 
-    > Leave all other fields blank & unchecked.    
-  1. Click **Add**.   
-  1. Within the **Views/Calendar/Index.cshtml** file, delete all the code in the file and replace it with the following code:
+    > Diğer değerleri boş ve seçilmemiş olarak bırakalım.    
+  1. **Add** butonuna tıklayalım.   
+  1. **Views/Calendar/Index.cshtml** dosyasınıda bulunan tüm kodu silerek aşağıdaki kod ile değiştirelim:
 
     ````html
     @{
@@ -281,16 +280,16 @@ In this exercise you will add a controller and views that utilize the Microsoft 
     </div>
     ````
 
-  1. Save your changes.
-1. Run the application by pushing **F5**.
+  1. Değişikliklerimizi kaydedelim.
+1. **F5** 'e basarak uygulamamızı test edelim.
 
- > **Note:** If you receive an error that indicates ASP.NET could not connect to the SQL database, please see the [SQL Server Database Connection Error Resolution document](../../SQL-DB-Connection-Error-Resolution.md) to quickly resolve the issue. 
+  > **Not:** Eğer "ASP.NET could not connect to the SQL database" hatası alırsanız lütfen [SQL Server Database Connection Error Resolution document](https://github.com/OfficeDev/TrainingContent/blob/master/SQL-DB-Connection-Error-Resolution.md) dökümanını inceleyerek çözüm getirebilirsiniz.. 
 
-  1. You're now prompted to login (if you're not already logged in). Note that if you're not prompted to login immediately, click **Sign in** in the upper-right corner on the homepage.
-  2. When prompted, login using your **Organizational Account**.
-  3. If prompted, trust the permissions requested by the application.
-  4. On the homepage of the application, click the **Calendar** link in the top navigation.
-  5. Verify that events appear in the web application.
+  1. Şimdi tekrar login olmanızı isteyecek (Eğer logged-in olarak gelmediyse). Eğer hemen login olmadıysanız hemen sayfanın sağ üst köşesindeki **Sign in** seçeneğini tıklayın.
+  2. Login ekranı gelince, Office365 **Organizasyon Hesabınızı** kullanarak log-in olun.
+  3. Eğer sorarsa, uygulamanız için gerekli tüm yetkileri verebilirsiniz.
+  4. Uygulamada AnaSayfa'da üst menüde yer alan **Calendar** linkine tıklayın.
+  5. Takviminizde yer alan güncel etkinliklerin yerlerinde olduğundan emin olun.
    
 
-**Congratulations! You have completed your first Microsoft Graph application.**
+** Tebrikler! İlk Microsoft Graph uygulamanızı geliştirdiniz.**
