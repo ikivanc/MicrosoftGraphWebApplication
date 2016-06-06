@@ -1,43 +1,43 @@
-# Getting started with Microsoft Graph
-In this lab, you will investigate the Microsoft Graph.
+# Microsoft Graph 'a başlangıç
+Bu lab örneğinde , Microsoft Graph ile ilk projenizi geliştireceksiniz.
 
-## Prerequisites
-1. You must have an Office 365 tenant to complete this lab. If you do not have one, the lab for **O3651-7 Setting up your Developer environment in Office 365** shows you how to obtain a trial.
+## Gereksinimler
+1. Bu lab'ı test edebilmeniz için Office 365 tenantına ihtiyacınız vardır. Eğer bir hesabınız yoksa [**Office 365 için geliştirme ortamı oluşturma linkini**](https://github.com/OfficeDev/TrainingContent/blob/master/O3651/O3651-7%20Setting%20up%20your%20Developer%20environment%20in%20Office%20365/Lab.md) kontrol edebilirsiniz.
 
-## Exercise 1: Create & Configure an MVC Web Application
-In this exercise you will create a new MVC web application to utilize the Microsoft Graph.
+## Adım 1:  Bir MVC Web Uygulaması Oluşturma ve Konfigüre etme
+Bu adımda, bir MVC web uygulaması oluşturup onu Microsoft Graph ile bağlamayı göreceksiniz.
 
-1. In Visual Studio, click **File/New/Project**.
-1. In the **New Project** dialog
-  1. Select **Templates/Visual C#/Web**.
-  1. Select **ASP.NET Web Application**.
+1. Visual Studio'dan, **File/New/Project** seçin.
+1. **New Project** 'i seçin
+  1. **Templates/Visual C#/Web** 'i seçin.
+  1. **ASP.NET Web Application** 'ı seçin.
 
-    ![](Images/01.png)
-    > **Note:** Make sure you enter the exact same name for the Visual Studio Project that is specified in these lab instructions.  The Visual Studio Project name becomes part of the namespace in the code.  The code inside these instructions depends on the namespace matching the Visual Studio Project name specified in these instructions.  If you use a different project name the code will not compile unless you adjust all the namespaces to match the Visual Studio Project name you enter when you create the project.
+    ![](Screenshots/01.png)
+    > **Not:** Projenizi olutşururken bu lab içerisindeki isimlerin aynısını vermeye dikkat edin. The Visual Studio Project adı projenin kodu içerisinde namespace olacaktır. Bu adımlardaki kodların tamamı namespace ile ilişkili olacağı için kodunuzun çalışmasına da etkili olacaktır. Eğer farklı bir proje adı verirseniz namespace'ler farklı olacağından buradaki örnek kodlar çalışmayacaktır.
 
-  1. Click **OK**.
-1. In the **New ASP.NET Project** dialog
-  1. Click **MVC**.
-  2. Click **Change Authentication**.
-  3. Select **Work And School Accounts**.
-  4. Select **Cloud - Single Organization**
-  5. Input **Domain**
-  6. Check **Read directory data** under Directory Access Permissions 
-  7. Click **OK**.
-  8. Uncheck **Host in the cloud**
-  9. Click **OK**.
+  1. **OK** Tıklayın.
+1.  **New ASP.NET Project** dialogu içerisinden
+  1. **MVC** 'yi seçin.
+  2. **Change Authentication** 'ı seçin.
+  3. **Work And School Accounts** 'ı seçin.
+  4. **Cloud - Single Organization** 'ı seçin
+  5. **Domain** adınızı girin
+  6. Directory Access Permissions altındaki **Read directory data** seçeneğini seçin.  
+  7. **OK** 'i tıklayın.
+  8. **Host in the cloud** seçeniğini kaldırın.
+  9. **OK** 'İ tıklayın.
 
-    ![](Images/03.png)
+    ![](Screenshots/03.png)
 
-    ![](Images/02.png)
+    ![](Screenshots/02.png)
 
-1. Update the web project to use SSL by default:
-  1. In the **Solution Explorer** tool window, select the project and look at the **Properties** tool window. 
-  1. Change the property **SSL Enabled** to **TRUE**.
-  1. Copy the **SSL URL** property to the clipboard for use in the next step.
-  1. Save your changes.
+1.  SSL'i default olarak kullanmak için web projesini aşağıdaki şekilde update edin :
+  1. **Solution Explorer** bölümündeki araçlar penceresinde, projeyi seçin ve **Properties** araç ekranına bakın. 
+  1. **SSL Enabled** özelliğini **TRUE** olarak değiştirin.
+  1. **SSL URL** değerini bir sonraki adımlarda kullanmak için kopyalayın.
+  1. Değişikliklerinizi kaydedin.
 
-    ![](Images/SslEnabled.png)
+    ![](Screenshots/SslEnabled.png)
     > It is important to do this now because in the next step when you create the application in Azure AD, you want the reply URL to use HTTPS. If you did not do this now, you would have to manually make the changes the Visual Studio wizard is going to do for you in creating the app.
     
 1. Configure the project to always go to the homepage of the web application when debugging:
@@ -55,7 +55,7 @@ In this exercise you will create a new MVC web application to utilize the Micros
   1. Login using your **Organizational Account**.
   1. Upon a successful login, since this will be the first time you have logged into this app, Azure AD will present you with the common consent dialog that looks similar to the following image:
 
-    ![](Images/ConsentDialog.png)
+    ![](Screenshots/ConsentDialog.png)
 
   1. Click **Accept** to approve the app's permission request on your data in Office 365.
   1. You will then be redirected back to your web application. However notice in the upper right corner, it now shows your email address & the **Sign Out** link.
@@ -86,7 +86,7 @@ In this exercise you will take the ASP.NET MVC web application you created in th
     * **Read user calendars**    
   1. Click the **Save** button at the bottom of the page.
 
-     ![](Images/AzurePermission.png)
+     ![](Screenshots/AzurePermission.png)
 1. Add a helper class that will be used to harvest settings out of the `web.config` and create the necessary strings that will be used for authentication:
 
   1. Right-click the project and select **Add/New Folder**. Give the folder the name **Utils**. 
